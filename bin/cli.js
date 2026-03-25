@@ -37,6 +37,9 @@ Usage:
   copilot-architect upgrade [path]   Update existing installation to latest version
   copilot-architect --version        Print version
 
+Install / Update:
+  npm install -g github:deepak78194/copilot-architect
+
 What gets installed:
   .github/agents/copilot-architect.agent.md
   .copilot/skills/copilot-architect/SKILL.md

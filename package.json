@@ -1,5 +1,5 @@
 {
-  "name": "@deepak78194/copilot-architect",
+  "name": "copilot-architect",
   "version": "1.0.0",
   "description": "Install the Copilot Architect agent and skills into any GitHub Copilot repo — one command to add an AI ecosystem engineer",
   "type": "module",
