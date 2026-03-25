@@ -4,10 +4,10 @@
 
 ## Install
 
-No npm account needed — installs directly from GitHub:
+No npm account or SSH keys needed:
 
 ```bash
-npm install -g github:deepak78194/copilot-architect
+npm install -g https://github.com/deepak78194/copilot-architect.git
 ```
 
 ## Usage
@@ -73,7 +73,7 @@ The architect reasons about the right pattern before generating anything, shows 
 To get the latest version of the agent and all knowledge files:
 
 ```bash
-npm install -g github:deepak78194/copilot-architect
+npm install -g https://github.com/deepak78194/copilot-architect.git
 copilot-architect upgrade
 ```
 

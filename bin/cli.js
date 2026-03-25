@@ -38,7 +38,7 @@ Usage:
   copilot-architect --version        Print version
 
 Install / Update:
-  npm install -g github:deepak78194/copilot-architect
+  npm install -g https://github.com/deepak78194/copilot-architect.git
 
 What gets installed:
   .github/agents/copilot-architect.agent.md
