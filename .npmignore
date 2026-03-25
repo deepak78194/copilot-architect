@@ -1,0 +1,5 @@
+# Files included in the npm package are defined by "files" in package.json.
+# Exclude everything else from the published package.
+*.md
+!README.md
+.gitignore
