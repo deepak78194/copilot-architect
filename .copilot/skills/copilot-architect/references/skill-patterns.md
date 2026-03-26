@@ -82,7 +82,7 @@ tags: [<comma-separated domain tags, optional>]
 [List all bundled folders and their contents. Include any that apply:]
 - `references/<file>.md` — [domain knowledge, standards, curated docs]
 - `templates/<file>.md` — [reusable document/code templates to fill in]
-- `scripts/<file>.sh` — [executable scripts or automation helpers]
+- `scripts/<file>.sh` — [scripts for the user to run as part of the workflow]
 - `assets/<file>` — [static files: schemas, configs, sample data]
 - `examples/<file>` — [worked examples, before/after demonstrations]
 
@@ -109,13 +109,13 @@ A skill folder can contain **any combination** of supporting subfolders. Choose 
 
 | Folder | Purpose | Typical contents |
 |---|---|---|
-| `references/` | Domain knowledge the skill reads at runtime | Standards docs, curated guides, decision trees, scoring rubrics |
+| `references/` | Domain knowledge the skill consults | Standards docs, curated guides, decision trees, scoring rubrics |
 | `templates/` | Reusable scaffolds the skill fills in | Document templates, code scaffolds, config skeletons |
-| `scripts/` | Executable helpers the skill can invoke | Shell scripts, automation scripts, CLI wrappers |
-| `assets/` | Static files the skill copies or adapts | JSON schemas, sample configs, seed data, diagrams (as markdown) |
+| `scripts/` | Scripts the user runs as part of the workflow | Shell scripts, automation scripts, CLI wrappers (not executed by Copilot directly) |
+| `assets/` | Static files the skill copies or adapts | JSON schemas, sample configs, seed data, text-based diagrams |
 | `examples/` | Worked demonstrations the skill learns from | Before/after code, end-to-end walkthroughs, sample outputs |
 
-**Choose the right folder**: if a file is a template to fill in → `templates/`. If it's knowledge to read → `references/`. If it's a script to run → `scripts/`. If it's a static resource to copy → `assets/`. If it's a worked example → `examples/`.
+**Choose the right folder**: if a file is a template to fill in → `templates/`. If it's knowledge to read → `references/`. If it's a script for the user to run → `scripts/`. If it's a static resource to copy → `assets/`. If it's a worked example → `examples/`.
 
 ### What belongs in supporting folders
 - Document templates (e.g., ADR template, spec template) → `templates/`
@@ -123,14 +123,14 @@ A skill folder can contain **any combination** of supporting subfolders. Choose 
 - Code patterns / reference implementations → `references/` or `examples/`
 - Decision trees or scoring rubrics → `references/`
 - Checklists the skill systematically applies → `references/`
-- Executable automation or CLI scripts → `scripts/`
+- Executable automation or CLI scripts (provided for users to run) → `scripts/`
 - JSON/YAML schemas, sample config files → `assets/`
 - Before/after code demonstrations → `examples/`
 
 ### What does NOT belong in supporting folders
 - Generated outputs (outputs go into the user's repo, not the skill)
 - Hardcoded project data (keep skills project-agnostic)
-- Binaries, images, or non-text content (these don't load into context)
+- Binary files or images (these don't load into context; use text-based diagrams like Mermaid or ASCII art instead)
 
 ### File naming rules (apply to all folders)
 - Descriptive, kebab-case: `owasp-top10.md`, `adr-template.md`, `review-checklist.md`
@@ -173,7 +173,7 @@ A skill folder can contain **any combination** of supporting subfolders. Choose 
 **Examples**: `conventional-commit`, `gh-cli`, `playwright-generate-test`  
 **Structure**:
 - SKILL.md: step-by-step workflow, what inputs are needed
-- `scripts/setup.sh` (optional): automation scripts for workflow steps
+- `scripts/setup.sh` (optional): automation scripts for the user to run during workflow steps
 - `templates/output-template.md` (optional): template for workflow output
 - `examples/walkthrough.md`: worked examples of the workflow end-to-end
 - May invoke external tools or CLI; document prerequisites
