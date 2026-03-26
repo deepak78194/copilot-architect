@@ -32,6 +32,7 @@ Run this checklist before finalizing any generated agent, skill, or instructions
 - [ ] No other agent in the repo has the same responsibility (no duplicates)
 - [ ] If this hands off to another agent: that agent exists and its filename matches
 - [ ] Description would let a new user correctly decide to use this agent vs another
+- [ ] If this agent references skills: those skills exist and their names match
 
 ---
 
@@ -51,16 +52,23 @@ Run this checklist before finalizing any generated agent, skill, or instructions
 - [ ] Examples: at least 1 concrete example with input and output
 - [ ] Notes/Limitations: any caveats are documented
 
-### References (if present)
-- [ ] Each reference file is listed in SKILL.md with its purpose
-- [ ] Reference files are under 300 lines each
-- [ ] Reference files contain curated knowledge, not just link lists
-- [ ] No reference file hardcodes project-specific data
+### Supporting Files (if present)
+- [ ] Each supporting file is listed in SKILL.md with its purpose
+- [ ] Supporting files are under 300 lines each
+- [ ] Supporting files contain curated knowledge, not just link lists
+- [ ] No supporting file hardcodes project-specific data
+- [ ] Files are organized in the correct folder by type:
+  - `references/` for domain knowledge and standards
+  - `templates/` for reusable scaffolds to fill in
+  - `scripts/` for executable automation helpers
+  - `assets/` for static files (schemas, configs, sample data)
+  - `examples/` for worked demonstrations
+- [ ] Templates and knowledge docs are not mixed in the same folder
 
 ### Cross-Check
 - [ ] Skill solves a problem not already covered by an existing skill
 - [ ] Skill is not better served as an instruction (always-on) or agent (tool-using)
-- [ ] SKILL.md total length under 600 lines (if longer, extract to references/)
+- [ ] SKILL.md total length under 600 lines (if longer, extract to supporting folders)
 
 ---
 
@@ -160,5 +168,5 @@ These issues require correction before generating files:
 | Instructions contradict an existing instructions file | Resolve conflict first |
 | Team coordinator can also implement | Split into coordinator + builder |
 | Hardcoded project name in any template | Replace with `${input:}` placeholder |
-| Skill SKILL.md references a file in references/ that doesn't exist | Create the reference file |
+| Skill SKILL.md references a file in supporting folders that doesn't exist | Create the file or fix the reference |
 | Agent handoffs reference an agent file that doesn't exist | Create that agent or fix the reference |

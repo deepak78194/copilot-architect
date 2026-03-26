@@ -20,14 +20,14 @@ A skill is a **self-contained, invocable unit of domain knowledge** packaged int
 
 ## When to Create a Folder-Based Skill vs a Single File
 
-| Use single SKILL.md file | Use folder with references/ |
+| Use single SKILL.md file | Use folder with supporting files |
 |---|---|
 | Simple behavior, no external material | Needs bundled templates, checklists, or domain docs |
 | Self-contained instructions (< 500 lines) | References external specs or standards |
 | No files to bundle | Has assets: code templates, schemas, config examples |
-| Quick triggered prompts | Multi-step workflow with reference lookup |
+| Quick triggered prompts | Multi-step workflow with file lookup |
 
-**Default**: start with a folder. Add `references/` when the SKILL.md body exceeds 400 lines or references external documents.
+**Default**: start with a folder. Add supporting subfolders when the SKILL.md body exceeds 400 lines, bundles reusable assets, or references external documents.
 
 ---
 
@@ -78,9 +78,13 @@ tags: [<comma-separated domain tags, optional>]
 ## Output
 [What the skill produces. Be specific about format, location, naming.]
 
-## Reference Files
-[If references/ folder exists, list each file and its purpose]
-- `references/<file>.md` — [what it contains and when it's used]
+## Supporting Files
+[List all bundled folders and their contents. Include any that apply:]
+- `references/<file>.md` — [domain knowledge, standards, curated docs]
+- `templates/<file>.md` — [reusable document/code templates to fill in]
+- `scripts/<file>.sh` — [executable scripts or automation helpers]
+- `assets/<file>` — [static files: schemas, configs, sample data]
+- `examples/<file>` — [worked examples, before/after demonstrations]
 
 ## Examples
 ### Example 1: <Simple Case>
@@ -97,26 +101,41 @@ tags: [<comma-separated domain tags, optional>]
 
 ---
 
-## References Folder Design
+## Supporting Files & Folders Design
 
-The `references/` folder bundles material the skill decompresses from at runtime. Design principles:
+A skill folder can contain **any combination** of supporting subfolders. Choose the folder type that best describes the content — don't force everything into a single `references/` folder.
 
-### What belongs in references/
-- Document templates (e.g., ADR template, spec template)
-- Domain standards (e.g., OpenAPI best practices, OWASP checklist)
-- Code patterns / reference implementations
-- Decision trees or scoring rubrics
-- Checklists the skill systematically applies
+### Folder Types
 
-### What does NOT belong in references/
+| Folder | Purpose | Typical contents |
+|---|---|---|
+| `references/` | Domain knowledge the skill reads at runtime | Standards docs, curated guides, decision trees, scoring rubrics |
+| `templates/` | Reusable scaffolds the skill fills in | Document templates, code scaffolds, config skeletons |
+| `scripts/` | Executable helpers the skill can invoke | Shell scripts, automation scripts, CLI wrappers |
+| `assets/` | Static files the skill copies or adapts | JSON schemas, sample configs, seed data, diagrams (as markdown) |
+| `examples/` | Worked demonstrations the skill learns from | Before/after code, end-to-end walkthroughs, sample outputs |
+
+**Choose the right folder**: if a file is a template to fill in → `templates/`. If it's knowledge to read → `references/`. If it's a script to run → `scripts/`. If it's a static resource to copy → `assets/`. If it's a worked example → `examples/`.
+
+### What belongs in supporting folders
+- Document templates (e.g., ADR template, spec template) → `templates/`
+- Domain standards (e.g., OpenAPI best practices, OWASP checklist) → `references/`
+- Code patterns / reference implementations → `references/` or `examples/`
+- Decision trees or scoring rubrics → `references/`
+- Checklists the skill systematically applies → `references/`
+- Executable automation or CLI scripts → `scripts/`
+- JSON/YAML schemas, sample config files → `assets/`
+- Before/after code demonstrations → `examples/`
+
+### What does NOT belong in supporting folders
 - Generated outputs (outputs go into the user's repo, not the skill)
 - Hardcoded project data (keep skills project-agnostic)
-- Binaries, images, or non-markdown content (these don't load into context)
+- Binaries, images, or non-text content (these don't load into context)
 
-### Reference file naming
+### File naming rules (apply to all folders)
 - Descriptive, kebab-case: `owasp-top10.md`, `adr-template.md`, `review-checklist.md`
 - Max one concern per file — split if a file covers two distinct topics
-- Keep each reference file under 300 lines — large files slow context loading
+- Keep each file under 300 lines — large files slow context loading
 
 ---
 
@@ -127,7 +146,8 @@ The `references/` folder bundles material the skill decompresses from at runtime
 **Examples**: `create-specification`, `readme-blueprint-generator`, `create-adr`  
 **Structure**:
 - SKILL.md: describes what to ask the user, what section structure to follow
-- `references/template.md`: the document template with required sections
+- `templates/document-template.md`: the document template with required sections to fill in
+- `references/style-guide.md` (optional): writing standards or section definitions
 - The skill fills the template from context + user input
 
 ### Pattern 2: Code Transformer
@@ -135,7 +155,8 @@ The `references/` folder bundles material the skill decompresses from at runtime
 **Examples**: `refactor`, `csharp-async`, `containerize-aspnetcore`  
 **Structure**:
 - SKILL.md: the transformation rules and criteria
-- `references/patterns.md`: before/after code pattern examples
+- `examples/patterns.md`: before/after code pattern demonstrations
+- `references/standards.md` (optional): coding standards or framework migration guides
 - The skill reads target code, applies transformation, writes result
 
 ### Pattern 3: Domain Expert Consultation
@@ -144,6 +165,7 @@ The `references/` folder bundles material the skill decompresses from at runtime
 **Structure**:
 - SKILL.md: scope of expertise, how to approach the consultation
 - `references/domain-knowledge.md`: curated domain reference (standards, options, trade-offs)
+- `references/decision-tree.md` (optional): structured decision framework
 - The skill synthesizes guidance from reference + codebase context
 
 ### Pattern 4: Workflow Execution
@@ -151,7 +173,9 @@ The `references/` folder bundles material the skill decompresses from at runtime
 **Examples**: `conventional-commit`, `gh-cli`, `playwright-generate-test`  
 **Structure**:
 - SKILL.md: step-by-step workflow, what inputs are needed
-- `references/examples.md`: worked examples of the workflow end-to-end
+- `scripts/setup.sh` (optional): automation scripts for workflow steps
+- `templates/output-template.md` (optional): template for workflow output
+- `examples/walkthrough.md`: worked examples of the workflow end-to-end
 - May invoke external tools or CLI; document prerequisites
 
 ### Pattern 5: Analyzer / Auditor
@@ -160,6 +184,8 @@ The `references/` folder bundles material the skill decompresses from at runtime
 **Structure**:
 - SKILL.md: what to check, scoring/severity definitions
 - `references/checklist.md`: systematic checklist the skill walks through
+- `templates/report-template.md` (optional): structured report format
+- `assets/severity-matrix.md` (optional): scoring criteria and thresholds
 - Output: always a structured report with findings and recommendations
 
 ---
@@ -207,4 +233,6 @@ Provide 3-5 trigger phrases: mix of full natural language + short command shortc
 | Reference files that are just link lists | Links die; no value without the content | Summarize the content, cite sources |
 | No output section | Users don't know what to expect | Always document output format and location |
 | Skill duplicates an agent's capability | Redundancy, confusion | Decide: is this behavior always-on (→ instruction) or on-demand (→ skill)? |
-| SKILL.md > 600 lines | Context bloat; hard to maintain | Extract to references/, keep SKILL.md as index |
+| SKILL.md > 600 lines | Context bloat; hard to maintain | Extract to supporting folders, keep SKILL.md as index |
+| All files crammed into references/ | Templates mixed with knowledge; unclear purpose | Use distinct folders: `templates/`, `scripts/`, `assets/`, `examples/` |
+| Supporting files over 300 lines | Slow context loading; hard to maintain | Split by concern into smaller files |

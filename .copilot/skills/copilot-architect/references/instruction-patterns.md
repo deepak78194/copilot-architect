@@ -10,7 +10,7 @@ Instructions are **always-on behavioral rules** automatically loaded by Copilot 
 
 **Do NOT use instructions for:**
 - One-time task execution → use a skill or prompt instead
-- Heavy reference material → use a skill with references/ folder
+- Heavy reference material → use a skill with supporting files
 - Persona definition → use an agent
 
 **DO use instructions for:**
@@ -184,7 +184,7 @@ Would this rule generate noise if applying to every file?
   NO  → Global or broad scope is fine
 
 Is this rule longer than 3 sentences?
-  YES → Extract to a skill with references/ for depth
+  YES → Extract to a skill with supporting files for depth
   NO  → Keep in instructions
 ```
 

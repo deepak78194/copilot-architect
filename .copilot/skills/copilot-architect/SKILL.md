@@ -35,7 +35,7 @@ Natural language also works:
 |---|---|
 | Single agent | `.github/agents/<name>.agent.md` created |
 | Multi-agent team | `.github/agents/<team>/` agent files + state directory (location chosen during design) |
-| Skill | `.copilot/skills/<name>/SKILL.md` + `references/` as needed |
+| Skill | `.copilot/skills/<name>/SKILL.md` + supporting folders (`references/`, `templates/`, `scripts/`, `assets/`, `examples/`) as needed |
 | Instructions | `.github/instructions/<name>.instructions.md` |
 | Review existing | Assessment report — no files written |
 | Improve existing | Targeted edits to the existing file |

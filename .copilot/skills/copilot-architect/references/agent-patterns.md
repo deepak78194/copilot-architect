@@ -92,6 +92,10 @@ If a section doesn’t add information, leave it out.
 [Example: “If the design is clearly wrong, I say so before implementing it.”]
 [This is where the agent gets opinions, not just instructions.]
 
+## Skills
+[Optional: list skills this agent can leverage for on-demand domain knowledge]
+- `<skill-name>` — [when and why this agent invokes it]
+
 ## Process
 [Step-by-step — how the agent approaches its task]
 1. Read [what] to understand [context]
